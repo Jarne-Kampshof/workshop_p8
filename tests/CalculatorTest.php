@@ -26,10 +26,10 @@ class CalculatorTest extends TestCase
     {
         // Arrange
         $a = 5;
-        $b = 3;
+        $b = 2;
 
         // Act
-        // $result = $this->calculator->add($a, $b);
+        $result = $this->calculator->add($a, $b);
 
         // Assert
         $this->assertEquals(8, $result);
