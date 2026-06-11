@@ -53,18 +53,18 @@ class CalculatorTest extends TestCase
         $result = $this->calculator->add($a, $b);
         $this->assertEquals(-8, $result);
     }
-    
+
     /*
-    * OPDRACHT:
-    * Maak een test voor subtract().
-    * Test een normale situatie (bijvoorbeeld 10 - 4).
-    */
+     * OPDRACHT:
+     * Maak een test voor subtract().
+     * Test een normale situatie (bijvoorbeeld 10 - 4).
+     */
     public function testSubtract()
     {
         $a = 10;
-        $b = 4; 
+        $b = 4;
 
-        $result = $this->calculator->subtract($a, $b);  
+        $result = $this->calculator->subtract($a, $b);
         $this->assertEquals(6, $result);
     }
 
@@ -105,10 +105,13 @@ class CalculatorTest extends TestCase
 
         $result = $this->calculator->divide($a, $b);
         $this->assertEquals(5, $result);
-
-        // Test delen door 0
+    }
+    
+    public function testDivideByZero()
+    {
         $this->expectException(InvalidArgumentException::class);
-        $this->calculator->divide($a, 0);
+
+        $this->calculator->divide(10, 0);
     }
 
     /* =========================
