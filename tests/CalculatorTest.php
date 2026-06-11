@@ -26,7 +26,7 @@ class CalculatorTest extends TestCase
     {
         // Arrange
         $a = 5;
-        $b = 2;
+        $b = 3;
 
         // Act
         $result = $this->calculator->add($a, $b);
