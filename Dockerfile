@@ -1,19 +1,16 @@
-FROM node:18
+FROM php:8.2-cli
 
-# werkmap in container
 WORKDIR /app
 
-# package files eerst (voor caching)
-COPY package*.json ./
+# dependencies voor composer
+COPY composer.json composer.lock ./
 
-# dependencies installeren
-RUN npm install
+RUN apt-get update && apt-get install -y unzip git curl \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer install --no-interaction --prefer-dist
 
-# rest van de code kopiëren
+# rest van project
 COPY . .
 
-# app poort (pas aan als nodig)
-EXPOSE 8000
-
-# start commando (pas aan als jouw project anders start)
-CMD ["npm", "start"]
+CMD ["php", "src/index.php"]
