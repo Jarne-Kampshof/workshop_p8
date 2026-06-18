@@ -12,7 +12,7 @@ class CalculatorTest extends TestCase
 
     protected function setUp(): void
     {
-        // Deze methode wordt vóór elke test uitgevoerd.
+        // Deze methode wordt vóór elke test uitgevoerd. 
         // Hier maken we één keer een nieuwe Calculator aan
         // zodat elke test met een "schone" situatie begint.
         $this->calculator = new Calculator();
