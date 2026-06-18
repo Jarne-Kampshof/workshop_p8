@@ -2,8 +2,11 @@ name: Build & Push Docker
 
 on:
   push:
+    branches: [ main ]
     tags:
       - 'v*'
+  pull_request:
+    branches: [ main ]
 
 jobs:
   docker:
@@ -18,7 +21,12 @@ jobs:
 
       - name: Extract version
         id: vars
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=latest" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build image
         run: |
@@ -26,6 +34,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/app:latest .
 
       - name: Push image
+        if: github.event_name != 'pull_request'
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/app:${{ steps.vars.outputs.VERSION }}
           docker push ${{ secrets.DOCKER_USERNAME }}/app:latest
